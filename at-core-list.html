@@ -1,0 +1,131 @@
+<!--
+Copyright (c) 2014 adenin TECHNOLOGIES. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+-->
+<!--
+`at-core-list` displays a responsive list. The template inside the
+`at-core-list` element represents the dom to create for each list item. The
+`data` property specifies an array of list item data. The `height` property
+represents the height of a list item.
+
+
+    <at-core-list data="{{data}}" height="80">
+      <template>
+        <div>List row: {{index}}</div>
+      </template>
+    </at-core-list>
+
+-->
+<link rel="import" href="../polymer/polymer.html">
+
+<polymer-element name="at-core-list" attributes="data">
+  <template>
+    <style>
+      .listContainer {
+      }
+
+      .listItem {
+        background: #FFF;
+        padding: 0px;
+        margin: 10px;
+        overflow: visible;
+        float: left;
+        width: calc(320px - 10px - 10px - 1px - 1px);
+        height: 80px;
+        border-radius: 2px;
+        box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.16);
+      }
+
+        .listItem > :first-child {
+          box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+        }
+
+
+      @media only screen and (max-width : 630px) {
+        .listItem {
+          width: 100% !important;
+          padding: 16px;
+          margin: 0px;
+          border-width: 0px;
+          border-bottom: 1px solid rgba(0, 0, 0, 0.16);
+          -moz-box-sizing: border-box;
+          -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+          height: auto;
+          box-shadow: none;
+        }
+
+          .listItem > :first-child {
+            box-shadow: none;
+          }
+      }
+
+      @media only screen and (min-width : 630px) {
+        .listItem {
+          width: calc(50% - 10px - 10px - 1px - 1px) !important;
+        }
+      }
+
+      @media only screen and (min-width : 950px) {
+        .listItem {
+          width: calc(33% - 10px - 10px - 1px - 1px) !important;
+        }
+      }
+
+      @media only screen and (min-width : 1270px) {
+        .listItem {
+          width: calc(25% - 10px - 10px - 1px - 1px) !important;
+        }
+      }
+    </style>
+    <shadow></shadow>
+  </template>
+  <script>
+    Polymer('at-core-list', {
+
+      attached: function () {
+        this.template = this.querySelector('template');
+      },
+
+      observe: {
+        'data template': 'initialize'
+      },
+      initialize: function () {
+        if (!this.data || !this.template) {
+          return;
+        }
+
+        var listContainer = document.createElement("div");
+        listContainer.className = "listContainer";
+
+        var listItem = document.createElement("div");
+        listItem.className = "listItem";
+
+
+        // apply template for each data item
+        //  ... wrap result with card layout div
+        //  ... and add to listContainer
+        for (i = 0; i < this.data.length; i++) {
+          var item = this.template.createInstance(this.data[i]);
+
+          var div = listItem.cloneNode(true);
+          div.appendChild(item);
+
+
+          listContainer.appendChild(div);
+
+        };
+
+        //append list container to shadow dom
+        this.shadowRoot.appendChild(listContainer);
+      },
+      domReady: function () {
+
+      },
+      ready: function () {
+
+      }
+    });
+
+  </script>
+</polymer-element>
