@@ -164,16 +164,18 @@ represents the height of a list item.
         }.bind(this), true);
 
         // update layout after orientation change
-        window.addEventListener('orientationchange', function () {
-          this.layout();
-        }.bind(this), true);
+        window.addEventListener('orientationchange', function () {          
+          setTimeout(function () {
+            this.layout();            
+          }.bind(this), 100);
+        }.bind(this), false);
 
         // show/hide drawer changes also the available width
         window.addEventListener('core-responsive-change', function () {
           setTimeout(function () {
             this.layout();
           }.bind(this), 100);
-        }.bind(this), true);
+        }.bind(this), false);
 
       },
       ready: function () {
