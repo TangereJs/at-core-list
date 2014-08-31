@@ -112,7 +112,7 @@ represents the height of a list item.
         if (cols > 5) cols = 5;
 
         wrapper.className = "cols-" + cols;
-
+        //alert(cw + " " + cols);
       },
 
       initialize: function () {
@@ -164,17 +164,27 @@ represents the height of a list item.
         }.bind(this), true);
 
         // update layout after orientation change
-        window.addEventListener('orientationchange', function () {          
+        window.addEventListener('orientationchange', function () {
+          this.async(function () {
+            this.layout();
+          });
+
+          // 2nd try to ensure that even slow android devices show the correct result
           setTimeout(function () {
             this.layout();            
-          }.bind(this), 100);
+          }.bind(this), 1000);
         }.bind(this), false);
 
         // show/hide drawer changes also the available width
         window.addEventListener('core-responsive-change', function () {
+          
+          this.async(function () {
+            this.layout();
+          });
           setTimeout(function () {
             this.layout();
-          }.bind(this), 100);
+          }.bind(this), 500);
+
         }.bind(this), false);
 
       },
