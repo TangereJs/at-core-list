@@ -21,6 +21,15 @@ represents the height of a list item.
 <polymer-element name="at-core-list" attributes="data">
   <template>
     <style>
+      :host {
+        width: 100%;
+        display: block;
+      }
+
+      #listWrapper {
+        width: 100%;
+      }
+
       .listContainer {
       }
 
@@ -29,8 +38,7 @@ represents the height of a list item.
         padding: 0px;
         margin: 10px;
         overflow: visible;
-        float: left;
-        width: calc(320px - 10px - 10px - 1px - 1px);
+        float: left;        
         height: 80px;
         border-radius: 2px;
         box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.16);
@@ -39,51 +47,50 @@ represents the height of a list item.
       .listItem > :first-child {
         box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
         box-sizing: border-box;
-        height: 100%;          
-      }    
-
-
-      @media only screen and (max-width : 630px) {
-        .listItem {
-          width: 100% !important;
-          padding: 16px;
-          margin: 0px;
-          border-width: 0px;
-          border-bottom: 1px solid rgba(0, 0, 0, 0.16);
-          -moz-box-sizing: border-box;
-          -webkit-box-sizing: border-box;
-          box-sizing: border-box;
-          height: auto !important;
-          box-shadow: none;
-        }
-
-          .listItem > :first-child {
-            box-shadow: none;
-          }
+        height: 100%;
       }
 
-      @media only screen and (min-width : 630px) {
-        .listItem {
-          width: calc(50% - 10px - 10px - 1px - 1px) !important;
-        }
+      .cols-1 .listItem {
+        width: 100% !important;
+        padding: 16px;
+        margin: 0px;
+        border-width: 0px;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.16);
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        height: auto !important;
+        box-shadow: none;
       }
 
-      @media only screen and (min-width : 950px) {
-        .listItem {
-          width: calc(33% - 10px - 10px - 1px - 1px) !important;
-        }
+      .cols-1 .listItem > :first-child {
+        box-shadow: none;
       }
 
-      @media only screen and (min-width : 1270px) {
-        .listItem {
-          width: calc(25% - 10px - 10px - 1px - 1px) !important;
-        }
+      .cols-2 .listItem {
+        width: calc(50% - 10px - 10px - 1px - 1px) !important;
       }
+
+      .cols-3 .listItem {
+        width: calc(33% - 10px - 10px - 1px - 1px) !important;
+      }
+
+      .cols-4 .listItem {
+        width: calc(25% - 10px - 10px - 1px - 1px) !important;
+      }
+
+      .cols-5 .listItem {
+        width: calc(20% - 10px - 10px - 1px - 1px) !important;
+      }
+
     </style>
     <shadow></shadow>
   </template>
   <script>
     Polymer('at-core-list', {
+      publish: {
+        cardWidth: 320
+      },
 
       attached: function () {
         this.template = this.querySelector('template');
@@ -92,13 +99,39 @@ represents the height of a list item.
       observe: {
         'data template': 'initialize'
       },
+
+      layout: function () {
+
+        // get the container width
+        var wrapper = this.shadowRoot.getElementById("listWrapper");
+        var cw = wrapper.offsetWidth;
+
+        // number of columns 1...5
+        var cols = Math.floor(cw / this.cardWidth);
+        if (cols < 1) cols = 1;
+        if (cols > 5) cols = 5;        
+
+        wrapper.className = "cols-" + cols;
+        
+      },
+
       initialize: function () {
         if (!this.data || !this.template) {
           return;
         }
 
+        // listWrapper is used to get the available width
+        var listWrapper = document.createElement("div");
+        listWrapper.id = "listWrapper";
+        this.shadowRoot.appendChild(listWrapper);
+
+        // calculate layout columns
+        this.layout();
+
+        // create list container
         var listContainer = document.createElement("div");
-        listContainer.className = "listContainer";
+        listContainer.classList.add("listContainer");
+
 
         var listItem = document.createElement("div");
         listItem.className = "listItem";
@@ -119,9 +152,21 @@ represents the height of a list item.
         };
 
         //append list container to shadow dom
-        this.shadowRoot.appendChild(listContainer);
+        //this.shadowRoot.appendChild(listContainer);
+        listWrapper.appendChild(listContainer);
+
       },
       domReady: function () {
+
+        // update layout after windows resize
+        window.addEventListener('resize', function () {
+          this.layout();
+        }.bind(this), true);
+
+        // update layout after orientation change
+        window.addEventListener('orientationchange', function () {
+          this.layout();
+        }.bind(this), true);
 
       },
       ready: function () {
