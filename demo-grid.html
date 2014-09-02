@@ -67,7 +67,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           font-size: 12px;
         }
       </style>
-      <at-core-list id="list" data="{{data}}">
+      <at-core-list id="list" data="{{data}}" layout="grid">
         <template>
           <div class="item {{ {selected: selected} | tokenList }}">
             <div class="message" style="background-image: url(images/{{index % 4}}.png);">
