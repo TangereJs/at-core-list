@@ -13,7 +13,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <meta name="viewport" content="width=device-width">
   <script src="../platform/platform.js"></script>
   <link rel="import" href="at-core-list.html">
-  <link rel="import" href="demo-item.html">
   <style>
     html, body {
       height: 100%;
@@ -28,15 +27,58 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <polymer-element name="list-test">
     <template>
       <style>
+
         :host {
-          display: block;
+          display:block;
         }
 
         at-core-list {
-          width: 100%;
+          width: 100%;          
+        }
+
+        at-core-list::shadow .item {
+          box-sizing: border-box;
+          height: 80px;          
+          padding: 4px;
+          cursor: default;
+          overflow: hidden;
+        }
+
+        at-core-list::shadow .message {
+          padding-left: 77px;
+          line-height: 167%;
+          background-repeat: no-repeat;
+          background-position: 10px 10px;
+          background-size: 60px;
+        }
+
+        at-core-list::shadow .from {
+          display: inline;
+          font-weight: bold;
+        }
+
+        at-core-list::shadow .timestamp {
+          margin-left: 10px;
+          font-size: 12px;
+          opacity: 0.8;
+        }
+
+        at-core-list::shadow .body {
+          font-size: 12px;
         }
       </style>
-      <at-core-list id="list" items="{{data}}" itemComponent="demo-item"></at-core-list>
+      <at-core-list id="list" items="{{data}}" layout="card">
+        <template>
+          <div class="item {{ {selected: selected} | tokenList }}">
+            <div class="message" _style="background-image: url(images/{{index % 4}}.png);">
+              <span class="from">{{name}}</span>
+              <span class="timestamp">{{time}}</span>
+              <div class="subject">List item #{{index}}</div>
+              <div class="body">{{details}}</div>
+            </div>
+          </div>
+        </template>
+      </at-core-list>
 
     </template>
 
@@ -64,11 +106,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         Polymer('list-test', {
           count: 100,
           ready: function () {
-            this.data = this.generateData();
+            this.data = this.generateData();            
           },
 
           attached: function () {
-
+            
           },
           generateData: function () {
             var names = [], data = [];

@@ -9,7 +9,7 @@ This code may only be used under the BSD style license found at http://polymer.g
 represents the height of a list item.
 
 
-    <at-core-list data="{{data}}" height="80">
+    <at-core-list items="{{data}}" height="80">
       <template>
         <div>List row: {{index}}</div>
       </template>
@@ -18,7 +18,7 @@ represents the height of a list item.
 -->
 <link rel="import" href="../polymer/polymer.html">
 
-<polymer-element name="at-core-list" attributes="data">
+<polymer-element name="at-core-list" attributes="items">
   <template>
     <style>
       :host {
@@ -104,6 +104,7 @@ represents the height of a list item.
   <script>
     Polymer('at-core-list', {
       publish: {
+        itemComponent: "",
         cardWidth: 320,
         layout: "card"
       },
@@ -113,7 +114,7 @@ represents the height of a list item.
       },
 
       observe: {
-        'data template': 'initialize'
+        'items template itemComponent': 'initialize'
       },
 
       layoutList: function () {
@@ -136,8 +137,8 @@ represents the height of a list item.
       },
 
       initialize: function () {
-
-        if (!this.data || !this.template) {
+        
+        if (!this.items || (!this.template && !this.itemComponent)) {
           return;
         }
 
@@ -153,21 +154,34 @@ represents the height of a list item.
         var listContainer = document.createElement("div");
         listContainer.classList.add("listContainer");
 
-
+        // create wrapper div
         var listItem = document.createElement("div");
         listItem.className = "listItem";
 
 
-        // apply template for each data item
+        // apply template for each item in items
         //  ... wrap result with card layout div
         //  ... and add to listContainer
-        for (i = 0; i < this.data.length; i++) {
-          var item = this.template.createInstance(this.data[i]);
+
+        var item = null;
+        for (i = 0; i < this.items.length; i++) {
+          
+          if (!this.itemComponent) {
+
+            // use container template
+            var item = this.template.createInstance(this.items[i]);
+
+          } else {
+
+            // create component element
+            var item = document.createElement(this.itemComponent);
+            item.item = this.items[i];
+
+          }
 
           var div = listItem.cloneNode(true);
           div.appendChild(item);
-
-
+          
           listContainer.appendChild(div);
 
         };
