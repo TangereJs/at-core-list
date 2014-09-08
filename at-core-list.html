@@ -79,9 +79,9 @@ represents the height of a list item.
         box-shadow: none;
       }
 
-        .cols-1 .listItem > :first-child {
-          box-shadow: none;
-        }
+      .cols-1 .listItem > :first-child {
+        box-shadow: none;
+      }
 
       .cols-2 .listItem {
         width: calc(50% - 10px - 10px - 1px - 1px) !important;
@@ -137,7 +137,26 @@ represents the height of a list item.
       },
 
       initialize: function () {
-        
+
+        if (!!this.itemComponent) {
+          // dynamically load item-component
+          var imports = [];
+          // load item-component from other component (itemComponent = component-name/item-component) or from localfolder (item-component)
+          var compUrl = document.URL.indexOf("/components/") >= 0 ? "../" : "components/";
+          var compName = this.itemComponent;
+          imports.push(compName.indexOf("/") >= 0 ? compUrl + compName + ".html" : compName + ".html");
+
+          Polymer.import(imports, function () {
+            // bind after component is imported
+            this.bindItems();            
+          }.bind(this));
+
+        } else {
+          // with inline template binding can happen immediately
+          this.bindItems();
+        }
+      },
+      bindItems: function () {
         if (!this.items || (!this.template && !this.itemComponent)) {
           return;
         }
@@ -165,7 +184,7 @@ represents the height of a list item.
 
         var item = null;
         for (i = 0; i < this.items.length; i++) {
-          
+
           if (!this.itemComponent) {
 
             // use container template
@@ -181,7 +200,7 @@ represents the height of a list item.
 
           var div = listItem.cloneNode(true);
           div.appendChild(item);
-          
+
           listContainer.appendChild(div);
 
         };
