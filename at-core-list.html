@@ -1,4 +1,4 @@
-<!--
+<!-- 
 Copyright (c) 2014 adenin TECHNOLOGIES. All rights reserved.
 This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
 -->
@@ -114,7 +114,7 @@ represents the height of a list item.
       },
 
       observe: {
-        'items template itemComponent': 'initialize'
+        'items template itemComponent layout cardWidth': 'initialize'
       },
 
       layoutList: function () {
@@ -143,7 +143,9 @@ represents the height of a list item.
           var imports = [];
           // load item-component from other component (itemComponent = component-name/item-component) or from localfolder (item-component)
           var compUrl = document.URL.indexOf("/components/") >= 0 ? "../" : "components/";
+		  if(document.URL.indexOf("/elements/designer-element/")) compUrl = "/components/"; // designer preview?
           var compName = this.itemComponent;
+	
           imports.push(compName.indexOf("/") >= 0 ? compUrl + compName + ".html" : compName + ".html");
 
           Polymer.import(imports, function () {
@@ -160,12 +162,24 @@ represents the height of a list item.
         if (!this.items || (!this.template && !this.itemComponent)) {
           return;
         }
-
+		
+		//console.log("bindItems");		
+		
         // listWrapper is used to get the available width
-        var listWrapper = document.createElement("div");
-        listWrapper.id = "listWrapper";
-        this.shadowRoot.appendChild(listWrapper);
-
+		var listWrapper = this.shadowRoot.getElementById("listWrapper");
+		
+		if(!listWrapper) {
+			// create new listWrapper
+			listWrapper = document.createElement("div");
+			listWrapper.id = "listWrapper";
+			this.shadowRoot.appendChild(listWrapper);
+		} else {
+			// empty existing wrapper
+			while (listWrapper.hasChildNodes()) {
+				listWrapper.removeChild(listWrapper.lastChild);
+			}
+		}
+		
         // calculate layout columns
         this.layoutList();
 
@@ -193,7 +207,12 @@ represents the height of a list item.
           } else {
 
             // create component element
-            var item = document.createElement(this.itemComponent);
+			var comp = this.itemComponent;
+			
+			if(comp.indexOf("/")>0) {
+				comp=comp.substring(1+comp.indexOf("/"));
+			}
+            var item = document.createElement(comp);
             item.item = this.items[i];
 
           }
@@ -204,6 +223,8 @@ represents the height of a list item.
           listContainer.appendChild(div);
 
         };
+		
+
 
         //append list container to shadow dom
         //this.shadowRoot.appendChild(listContainer);
