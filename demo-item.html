@@ -1,4 +1,5 @@
 ﻿<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../at-core-data-sample/at-core-data-sample.html">
 
 <polymer-element name="demo-item" attributes="item">
 
@@ -43,6 +44,11 @@
         <div class="body">{{item.details}}</div>
       </div>
     </div>
+    <at-core-data-sample data="{{ item }}" id="at_core_data_sample">{
+       "title": "value"
+    }</at-core-data-sample>
+
+
   </template>
 
   <script>
