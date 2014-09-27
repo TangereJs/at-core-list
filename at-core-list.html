@@ -143,11 +143,11 @@ represents the height of a list item.
           var imports = [];
           // load item-component from other component (itemComponent = component-name/item-component) or from localfolder (item-component)
           var compUrl = document.baseURI.indexOf("/components/") >= 0 ? "../" : "components/";
-          if (document.URL.indexOf("/elements/designer-element/") >=0 ) compUrl = "/components/"; // standalone designer preview?
+          if (document.URL.indexOf("/elements/designer-element/") >= 0) compUrl = "/components/"; // standalone designer preview?
           var compName = this.itemComponent;
 
           imports.push(compName.indexOf("/") >= 0 ? compUrl + compName + ".html" : compName + ".html");
-          
+
           Polymer.import(imports, function () {
             // bind after component is imported
             this.bindItems();
@@ -187,48 +187,63 @@ represents the height of a list item.
         var listContainer = document.createElement("div");
         listContainer.classList.add("listContainer");
 
-        // create wrapper div
-        var listItem = document.createElement("div");
-        listItem.className = "listItem";
+        var comp = this.itemComponent;
+        if (comp.indexOf("/") > 0) {
+          comp = comp.substring(1 + comp.indexOf("/"));
+        }
+
+        var html = '<template repeat="{{ item in items }}">'
+                   + '<div class="listItem">'
+                   + '<' + comp + ' item="{{ item }}"></' + comp + '>'
+                   + '</div></template>';
+
+        this.injectBoundHTML(html, listWrapper);
+        listWrapper.appendChild(listContainer);
 
 
-        // apply template for each item in items
-        //  ... wrap result with card layout div
-        //  ... and add to listContainer
+        //// create wrapper div
+        //var listItem = document.createElement("div");
+        //listItem.className = "listItem";
 
-        var item = null;
-        for (i = 0; i < this.items.length; i++) {
 
-          if (!this.itemComponent) {
+        //// apply template for each item in items
+        ////  ... wrap result with card layout div
+        ////  ... and add to listContainer
 
-            // use container template
-            var item = this.template.createInstance(this.items[i]);
+        //var item = null;
+        //for (i = 0; i < this.items.length; i++) {
 
-          } else {
+        //  if (!this.itemComponent) {
 
-            // create component element
-            var comp = this.itemComponent;
+        //    // use container template
+        //    var item = this.template.createInstance(this.items[i]);
 
-            if (comp.indexOf("/") > 0) {
-              comp = comp.substring(1 + comp.indexOf("/"));
-            }
-            var item = document.createElement(comp);
-            item.item = this.items[i];
+        //  } else {
 
-          }
+        //    // create component element
+        //    var comp = this.itemComponent;
 
-          var div = listItem.cloneNode(true);
-          div.appendChild(item);
+        //    if (comp.indexOf("/") > 0) {
+        //      comp = comp.substring(1 + comp.indexOf("/"));
+        //    }
+        //    var item = document.createElement(comp);
+        //    item.item = this.items[i];
 
-          listContainer.appendChild(div);
+        //  }
 
-        };
+        //  var div = listItem.cloneNode(true);
+        //  div.appendChild(item);
+
+
+        //  listContainer.appendChild(div);
+
+        //};
 
 
 
         //append list container to shadow dom
         //this.shadowRoot.appendChild(listContainer);
-        listWrapper.appendChild(listContainer);
+        //listWrapper.appendChild(listContainer);
 
       },
       domReady: function () {
