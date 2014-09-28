@@ -126,14 +126,15 @@ represents the height of a list item.
         if (!wrapper) return; // component not yet ready
 
         var cw = wrapper.offsetWidth;
-
+        
         // number of columns 1...5
         var cols = Math.floor(cw / this.cardWidth);
         if (cols < 1) cols = 1;
         if (cols > 5) cols = 5;
 
         wrapper.className = layout + " cols-" + cols;
-        //alert(cw + " " + cols);
+        
+        return cw;
       },
 
       initialize: function () {
@@ -181,7 +182,13 @@ represents the height of a list item.
         }
 
         // calculate layout columns
-        this.layoutList();
+        if (0 == this.layoutList()) {
+
+          // 0 == parent width not yet availble, retry
+          this.async(function () {
+            this.layoutList();
+          });
+        }
 
         // create list container
         var listContainer = document.createElement("div");
