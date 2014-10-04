@@ -33,6 +33,16 @@ represents the height of a list item.
       .listContainer {
       }
 
+      .card.cols-1 .listItem:first-of-type {
+        margin-top: 10px;
+        border-top: 1px solid rgba(0, 0, 0, 0.16);
+      }
+
+      .card.cols-1 .listItem {        
+        padding-left: 4px;
+        padding-right: 4px;        
+      }
+
       .grid .listContainer {
         border-top: 1px solid rgba(0, 0, 0, 0.16);
       }
@@ -104,17 +114,32 @@ represents the height of a list item.
   <script>
     Polymer('at-core-list', {
       publish: {
+        items: [],
         itemComponent: "",
         cardWidth: 320,
         layout: "card"
       },
-
+      _initialized: "",
       attached: function () {
         this.template = this.querySelector('template');
       },
 
       observe: {
-        'items template itemComponent layout cardWidth': 'initialize'
+        'template itemComponent layout cardWidth': 'initialize'
+      },
+
+      itemsChanged: function () {
+        this.initialize();
+      },
+
+      clear: function () {
+
+        // remove all items
+        if (!!this.items) {
+          while (this.items.length > 0) {
+            this.items.pop();
+          }
+        }
       },
 
       layoutList: function () {
@@ -126,18 +151,29 @@ represents the height of a list item.
         if (!wrapper) return; // component not yet ready
 
         var cw = wrapper.offsetWidth;
-        
+
         // number of columns 1...5
         var cols = Math.floor(cw / this.cardWidth);
         if (cols < 1) cols = 1;
         if (cols > 5) cols = 5;
 
-        wrapper.className = layout + " cols-" + cols;
-        
+        var newClass = layout + " cols-" + cols;
+        if (wrapper.className != newClass) {
+          wrapper.className = newClass;
+        }
+
         return cw;
       },
 
       initialize: function () {
+
+        // ignore repeated requests to initialize with the same settings
+        var status = this.itemComponent + "-" + this.layout + "-" + this.cardWidth;
+        if (status == this._initialized) {
+          return;
+        } else {
+          this._initialized = status;
+        }
 
         if (!!this.itemComponent) {
           // dynamically load item-component
@@ -164,8 +200,6 @@ represents the height of a list item.
           return;
         }
 
-        //console.log("bindItems");
-
         // listWrapper is used to get the available width
         var listWrapper = this.shadowRoot.getElementById("listWrapper");
 
@@ -191,8 +225,7 @@ represents the height of a list item.
         }
 
         // create list container
-        var listContainer = document.createElement("div");
-        listContainer.classList.add("listContainer");
+        var fragment = document.createDocumentFragment();
 
         var comp = this.itemComponent;
         if (comp.indexOf("/") > 0) {
@@ -204,55 +237,15 @@ represents the height of a list item.
                    + '<' + comp + ' item="{{ item }}"></' + comp + '>'
                    + '</div></template>';
 
-        this.injectBoundHTML(html, listWrapper);
-        listWrapper.appendChild(listContainer);
+        //console.log("done" + Date.now())
+        //this.injectBoundHTML(html, listWrapper);
+        ////listWrapper.appendChild(listContainer);
 
-
-        //// create wrapper div
-        //var listItem = document.createElement("div");
-        //listItem.className = "listItem";
-
-
-        //// apply template for each item in items
-        ////  ... wrap result with card layout div
-        ////  ... and add to listContainer
-
-        //var item = null;
-        //for (i = 0; i < this.items.length; i++) {
-
-        //  if (!this.itemComponent) {
-
-        //    // use container template
-        //    var item = this.template.createInstance(this.items[i]);
-
-        //  } else {
-
-        //    // create component element
-        //    var comp = this.itemComponent;
-
-        //    if (comp.indexOf("/") > 0) {
-        //      comp = comp.substring(1 + comp.indexOf("/"));
-        //    }
-        //    var item = document.createElement(comp);
-        //    item.item = this.items[i];
-
-        //  }
-
-        //  var div = listItem.cloneNode(true);
-        //  div.appendChild(item);
-
-
-        //  listContainer.appendChild(div);
-
-        //};
-
-
-
-        //append list container to shadow dom
-        //this.shadowRoot.appendChild(listContainer);
-        //listWrapper.appendChild(listContainer);
+        this.injectBoundHTML(html, fragment);
+        listWrapper.appendChild(fragment);
 
       },
+
       domReady: function () {
 
         // update layout after windows resize
