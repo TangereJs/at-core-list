@@ -181,6 +181,9 @@ represents the height of a list item.
           // load item-component from other component (itemComponent = component-name/item-component) or from localfolder (item-component)
           var compUrl = document.baseURI.toLowerCase().indexOf("/components/") >= 0 ? "../" : "components/";
           if (document.URL.indexOf("/elements/designer-element/") >= 0) compUrl = "/components/"; // standalone designer preview?
+
+          if (window.ComponentsBase != undefined) compUrl = window.ComponentsBase;
+
           var compName = this.itemComponent;
 
           imports.push(compName.indexOf("/") >= 0 ? compUrl + compName + ".html" : compName + ".html");
