@@ -1,0 +1,53 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../liquid-template/liquid-template.html">
+<link rel="import" href="../at-carbon-clamp/at-carbon-clamp.html">
+<link rel="import" href="../at-core-data-sample/at-core-data-sample.html">
+
+
+<polymer-element name="demo-sui-item" attributes="item">
+
+  <template>
+    <style>
+      liquid-template::shadow .carditem {
+        height: 11em;
+        cursor: default;
+        overflow: hidden;
+      }
+
+    </style>
+    <liquid-template data="{{ item }}">
+      <template>
+        <div class="ui carditem">
+          <div class="content">
+            <div class="header">{{name}}</div>
+            <div class="meta">
+              <span class="right floated time">{{time}}</span>
+              <span class="category">#{{index}}</span>
+            </div>
+            <div class="description">
+              <at-carbon-clamp lines="2" text="{{details}}"></at-carbon-clamp>
+            </div>
+          </div>
+          <div class="extra content">
+            <div class="right floated author">
+              {{name}}&nbsp;
+              <img class="ui avatar image" src="images/{{ index | modulo:4 }}.png">
+            </div>
+          </div>
+        </div>
+      </template>
+    </liquid-template>
+    <at-core-data-sample data="{{ item }}" id="at_core_data_sample">{ "title": "value" }
+    </at-core-data-sample>
+
+
+  </template>
+
+  <script>
+    Polymer('demo-sui-item', {
+
+    });
+  </script>
+
+</polymer-element>
+
