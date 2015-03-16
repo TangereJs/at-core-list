@@ -1,24 +1,23 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../liquid-template/liquid-template.html">
+<link rel="import" href="../at-carbon-clamp/at-carbon-clamp.html">
+<link rel="import" href="../at-core-data-sample/at-core-data-sample.html">
 
 
-
-<dom-module id="demo-sui-item">
-
-  <style>
-     .carditem {
-      height: 11em;
-      cursor: default;
-      overflow: hidden;
-    }
-    .description {
-      min-height: 2.5rem;
-    }
-  </style>
-
+<polymer-element name="demo-sui-item" attributes="item">
 
   <template>
-    <liquid-template model="{{item}}">
+    <style>
+      liquid-template::shadow .carditem {
+        height: 11em;
+        cursor: default;
+        overflow: hidden;
+      }
+      liquid-template::shadow .description {
+        min-height: 2.5rem;
+      }
+    </style>
+    <liquid-template data="{{ item }}">
       <template>
         <div class="ui carditem">
           <div class="content">
@@ -28,7 +27,7 @@
               <span class="category">#{{index}}</span>
             </div>
             <div class="description">
-              {{details}}
+              <at-carbon-clamp lines="2" text="{{details}}"></at-carbon-clamp>
             </div>
           </div>
           <div class="extra content">
@@ -40,17 +39,17 @@
         </div>
       </template>
     </liquid-template>
+    <at-core-data-sample data="{{ item }}" id="at_core_data_sample">{ "title": "value" }
+    </at-core-data-sample>
+
+
   </template>
-</dom-module>
 
-<script>
-  Polymer({
-    is: 'demo-sui-item',
-    properties: {
-      item: { type: Object }
-    }
-  });
-</script>
+  <script>
+    Polymer('demo-sui-item', {
 
+    });
+  </script>
 
+</polymer-element>
 
