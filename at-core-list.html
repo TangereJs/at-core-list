@@ -4,7 +4,6 @@ This code may only be used under the BSD style license found at http://polymer.g
 -->
 
 <link rel="import" href="../polymer/polymer.html">
-<link rel="import" href="../polymer-import/polymer-import.html">
 
 <dom-module id="at-core-list">
 
@@ -165,9 +164,9 @@ This code may only be used under the BSD style license found at http://polymer.g
       }
 
       if (!!this.itemComponent) {
+        
         // dynamically load item-component
-
-        var imports = [];
+        
         // load item-component from other component (itemComponent = component-name/item-component) or from localfolder (item-component)
         var compUrl = document.baseURI.toLowerCase().indexOf("/components/") >= 0 ? "../" : "components/";
         if (document.URL.indexOf("/elements/designer-element/") >= 0) compUrl = "/components/"; // standalone designer preview?
@@ -175,13 +174,11 @@ This code may only be used under the BSD style license found at http://polymer.g
         if (window.ComponentsBase != undefined) compUrl = window.ComponentsBase;
 
         var compName = this.itemComponent;
-
-        imports.push(compName.indexOf("/") >= 0 ? compUrl + compName + ".html" : compName + ".html");
-
-        Polymer.import(imports, function () {
-          // bind after component is imported
-          this.bindItems();
-        }.bind(this));
+        var importPath = compName.indexOf("/") >= 0 ? compUrl + compName + ".html" : compName + ".html";
+        
+        this.importHref(importPath, function () {          
+         this.bindItems();
+        });
 
       } else {
         // with inline template binding can happen immediately
