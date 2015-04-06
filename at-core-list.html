@@ -115,9 +115,9 @@ This code may only be used under the BSD style license found at http://polymer.g
     },
 
     observers: {
-      'items itemComponent layout cardWidth': 'initialize'
+      'itemComponent layout cardWidth': 'initialize',
+      'items.*': 'initialize'
     },
-
 
     clear: function () {
 
@@ -155,18 +155,14 @@ This code may only be used under the BSD style license found at http://polymer.g
 
     initialize: function () {
 
-      // ignore repeated requests to initialize with the same settings
-      var status = this.itemComponent + "-" + this.layout + "-" + this.cardWidth;
-      if (status == this._initialized) {
+      if (!this.items || (!this.template && !this.itemComponent)) {
         return;
-      } else {
-        this._initialized = status;
       }
 
       if (!!this.itemComponent) {
-        
+
         // dynamically load item-component
-        
+
         // load item-component from other component (itemComponent = component-name/item-component) or from localfolder (item-component)
         var compUrl = document.baseURI.toLowerCase().indexOf("/components/") >= 0 ? "../" : "components/";
         if (document.URL.indexOf("/elements/designer-element/") >= 0) compUrl = "/components/"; // standalone designer preview?
@@ -175,9 +171,9 @@ This code may only be used under the BSD style license found at http://polymer.g
 
         var compName = this.itemComponent;
         var importPath = compName.indexOf("/") >= 0 ? compUrl + compName + ".html" : compName + ".html";
-        
-        this.importHref(importPath, function () {          
-         this.bindItems();
+
+        this.importHref(importPath, function () {
+          this.bindItems();
         });
 
       } else {
@@ -185,7 +181,9 @@ This code may only be used under the BSD style license found at http://polymer.g
         this.bindItems();
       }
     },
+
     bindItems: function () {
+
       if (!this.items || (!this.template && !this.itemComponent)) {
         return;
       }
