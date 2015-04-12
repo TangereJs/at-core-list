@@ -1,6 +1,6 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../at-core-theme/at-core-theme.html">
-<link rel="import" href="../liquid-template/liquid-template.html">
+<link rel="import" href="../at-core-view/at-core-view.html">
 
 
 <dom-module id="demo-sui-item">
@@ -19,8 +19,8 @@
 
   <template>
     <at-core-theme></at-core-theme>
-    <liquid-template model="{{item}}">
-      <template>
+    <at-core-view model="{{item}}">
+      <template preserve-content>
         <div class="ui carditem">
           <div class="content">
             <div class="header">{{name}}</div>
@@ -40,13 +40,14 @@
           </div>
         </div>
       </template>
-    </liquid-template>
+    </at-core-view>
   </template>
 </dom-module>
 
 <script>
   Polymer({
     is: 'demo-sui-item',
+    _scopeCssViaAttr: true,
     properties: {
       item: { type: Object }
     }
