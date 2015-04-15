@@ -14,6 +14,7 @@ This code may only be used under the BSD style license found at http://polymer.g
     }
     #listWrapper {
       width: 100%;
+      overflow: auto;
     }
     .listContainer .card.cols-1 .listItem:first-of-type {
       margin-top: 10px;
@@ -263,8 +264,8 @@ This code may only be used under the BSD style license found at http://polymer.g
       Polymer.dom(listWrapper).appendChild(listContainer);
 
       // transform ShadyDom styles of innerHTML
-      if(!Polymer.Settings.useShadow) Polymer.StyleTransformer.dom(listWrapper, this.is, true);
-      
+      if (!Polymer.Settings.useShadow) Polymer.StyleTransformer.dom(listWrapper, this.is, true);
+
     },
 
     ready: function () {
