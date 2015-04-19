@@ -116,10 +116,10 @@ This code may only be used under the BSD style license found at http://polymer.g
       }
     },
 
-    observers: {
-      'itemComponent layout cardWidth': 'initialize',
-      'items.*': 'initialize'
-    },
+    observers: [
+      'initialize(itemComponent, layout, cardWidth)',
+      'initialize(items.*)'
+    ],
 
     clear: function () {
 
