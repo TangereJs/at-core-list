@@ -117,19 +117,8 @@ This code may only be used under the BSD style license found at http://polymer.g
     },
 
     observers: [
-      'initialize(itemComponent, layout, cardWidth)',
-      'initialize(items.*)'
+      'initialize(items.*,itemComponent, layout, cardWidth)'      
     ],
-
-    clear: function () {
-
-      // remove all items
-      if (!!this.items) {
-        while (this.items.length > 0) {
-          this.items.pop();
-        }
-      }
-    },
 
     layoutList: function () {
 
@@ -260,12 +249,11 @@ This code may only be used under the BSD style license found at http://polymer.g
         Polymer.dom(listContainer).appendChild(div);
       }
 
-      //append list container to shadow dom
-      Polymer.dom(listWrapper).appendChild(listContainer);
-
       // transform ShadyDom styles of innerHTML
       if (!Polymer.Settings.useShadow) Polymer.StyleTransformer.dom(listWrapper, this.is, true);
 
+      //append list container to shadow dom
+      Polymer.dom(listWrapper).appendChild(listContainer);
     },
 
     ready: function () {
