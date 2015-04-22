@@ -236,8 +236,8 @@ This code may only be used under the BSD style license found at http://polymer.g
       if (comp.indexOf("/") > 0) {
         comp = comp.substring(1 + comp.indexOf("/"));
       }
-
-      for (i = 0; i < this.items.length; i++) {
+      
+      for (var i = 0; i < this.items.length; i++) {
 
         var item = document.createElement(comp);
         item.item = this.items[i];
