@@ -20,6 +20,9 @@ This code may only be used under the BSD style license found at http://polymer.g
       margin-top: 10px;
       border-top: 1px solid rgba(0, 0, 0, 0.16);
     }
+    .card.cols-1 {
+      overflow-x:hidden;
+    }
     .card.cols-1 .listItem {
       padding-left: 2px;
       padding-right: 2px;
@@ -27,13 +30,16 @@ This code may only be used under the BSD style license found at http://polymer.g
     .grid .listContainer {
       border-top: 1px solid rgba(0, 0, 0, 0.16);
     }
+    .listContainer {
+      overflow-x: hidden;
+    }
     .listItem {
       background: #FFF;
       padding: 0px;
       overflow: visible;
       float: left;
-      height: auto;
-      transition: all .4s ease-out;
+      height: auto;      
+      transition: width .3s ease-in-out;
     }
     .card .listItem {
       margin: 10px;
@@ -81,8 +87,7 @@ This code may only be used under the BSD style license found at http://polymer.g
       width: calc(20% - 10px - 10px - 1px - 1px) !important;
     }
   </style>
-  <template>
-    <shadow></shadow>
+  <template>   
   </template>
 </dom-module>
 
@@ -131,11 +136,21 @@ This code may only be used under the BSD style license found at http://polymer.g
 
       var cw = wrapper.offsetWidth;
 
+      // retry if offsetWidth == 0 to give time to paint 
+      if (cw == 0) {        
+        this.async(function () {
+          this.layoutList();
+        }, 100);
+        return;
+      }
+
       // number of columns 1...5
       var cols = Math.floor(cw / this.cardWidth);
       if (cols < 1) cols = 1;
       if (cols > 5) cols = 5;
-
+      
+      //console.log("cols " + cols + " cw " + cw + " " + this.cardWidth);
+      
       var newClass = layout + " cols-" + cols;
       if (wrapper.className != newClass) {
         wrapper.className = newClass;
@@ -260,7 +275,14 @@ This code may only be used under the BSD style license found at http://polymer.g
 
       // update layout after windows resize
       window.addEventListener('resize', function () {
+        
         this.layoutList();
+
+        // 2nd layout after side drawer animation is finished
+        setTimeout(function () {
+          this.layoutList();
+        }.bind(this), 500);
+
       }.bind(this), true);
 
       // update layout after orientation change
@@ -277,10 +299,12 @@ This code may only be used under the BSD style license found at http://polymer.g
 
       // show/hide drawer changes also the available width
       window.addEventListener('core-responsive-change', function () {
-
+        
         this.async(function () {
           this.layoutList();
         });
+
+        // 2nd layout after side drawer animation is finished
         setTimeout(function () {
           this.layoutList();
         }.bind(this), 500);
