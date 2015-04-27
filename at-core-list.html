@@ -4,6 +4,8 @@ This code may only be used under the BSD style license found at http://polymer.g
 -->
 
 <link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../at-core-spinner/at-core-spinner.html">
+<link rel="import" href="../at-carbon-message/at-carbon-message.html">
 
 <dom-module id="at-core-list">
 
@@ -87,7 +89,8 @@ This code may only be used under the BSD style license found at http://polymer.g
       width: calc(20% - 10px - 10px - 1px - 1px) !important;
     }
   </style>
-  <template>   
+  <template>
+    <at-core-spinner id="spinner" type="wave"></at-core-spinner>   
   </template>
 </dom-module>
 
@@ -114,6 +117,12 @@ This code may only be used under the BSD style license found at http://polymer.g
         value: "card",
         notify: true
       },
+      indicator: {
+        type: Boolean,
+        value: false,
+        reflectToAttribute: true,
+        observer: "changeIndicator"
+      },
       _initialize: {
         type: String,
         value: "",
@@ -125,6 +134,9 @@ This code may only be used under the BSD style license found at http://polymer.g
       'initialize(items.*,itemComponent, layout, cardWidth)'      
     ],
 
+    changeIndicator: function () {      
+      this.$.spinner.display = this.indicator ? "block" : "none";
+    },
     layoutList: function () {
 
       var layout = this.layout == "grid" ? "grid" : "card";
@@ -266,6 +278,8 @@ This code may only be used under the BSD style license found at http://polymer.g
 
       // transform ShadyDom styles of innerHTML
       if (!Polymer.Settings.useShadow) Polymer.StyleTransformer.dom(listWrapper, this.is, true);
+
+      this.indicator = false; // hide indicator before list is rendered
 
       //append list container to shadow dom
       Polymer.dom(listWrapper).appendChild(listContainer);
