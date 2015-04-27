@@ -91,6 +91,7 @@ This code may only be used under the BSD style license found at http://polymer.g
   </style>
   <template>
     <at-core-spinner id="spinner" type="wave"></at-core-spinner>   
+    <at-carbon-message type="info" id="msgEmptyList"></at-carbon-message>
   </template>
 </dom-module>
 
@@ -123,6 +124,10 @@ This code may only be used under the BSD style license found at http://polymer.g
         reflectToAttribute: true,
         observer: "changeIndicator"
       },
+      emptyList: {
+        type: String,
+        value: "No data found"
+      },
       _initialize: {
         type: String,
         value: "",
@@ -131,7 +136,7 @@ This code may only be used under the BSD style license found at http://polymer.g
     },
 
     observers: [
-      'initialize(items.*,itemComponent, layout, cardWidth)'      
+      'initialize(items.*,itemComponent, layout, cardWidth, emptyList)'      
     ],
 
     changeIndicator: function () {      
@@ -172,6 +177,14 @@ This code may only be used under the BSD style license found at http://polymer.g
     },
 
     initialize: function () {
+      
+      var mel = this.$.msgEmptyList;
+      mel.html = "";
+      
+      // show error if items is an empty array
+      if (this.items.constructor.name == "Array" && this.items.length == 0) {
+        mel.html = this.emptyList;
+      }
 
       if (!this.items || (!this.template && !this.itemComponent)) {
         return;
