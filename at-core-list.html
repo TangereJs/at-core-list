@@ -143,19 +143,21 @@ This code may only be used under the BSD style license found at http://polymer.g
     changeIndicator: function () {      
       this.$.spinner.display = this.indicator ? "block" : "none";
       if (this.indicator) {
-        this.clearList();               // remove all items
-        this.$.msgEmptyList.html = "";  // clear error message
+        this.clear();        
       }
     },
-    clearList: function () {
-      var listWrapper = Polymer.dom(this.root).querySelector("#listWrapper");
 
+    clear: function () {
+
+      this.$.msgEmptyList.html = "";  // clear error message
+
+      // remove all items
+      var listWrapper = Polymer.dom(this.root).querySelector("#listWrapper");
       if (listWrapper) {
         while (listWrapper.hasChildNodes()) {
           listWrapper.removeChild(listWrapper.lastChild);
         }
       }
-
       Polymer.dom.flush();
     },
     layoutList: function () {
