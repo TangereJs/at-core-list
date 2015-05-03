@@ -304,6 +304,7 @@ This code may only be used under the BSD style license found at http://polymer.g
 
         //listContainer.appendChild(div);
         Polymer.dom(listContainer).appendChild(div);
+        this._container = Polymer.dom(listContainer);
       }
 
       // transform ShadyDom styles of innerHTML
@@ -313,6 +314,8 @@ This code may only be used under the BSD style license found at http://polymer.g
 
       //append list container to shadow dom
       Polymer.dom(listWrapper).appendChild(listContainer);
+
+      this.fire("list-ready");
     },
 
     ready: function () {
