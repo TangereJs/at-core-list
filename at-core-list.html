@@ -224,7 +224,13 @@ This code may only be used under the BSD style license found at http://polymer.g
 
         this.importHref(importPath, function () {
           this.bindItems();
+        }, function () {
+          Polymer.signal("busy-end");          
+          alert(window.location.href + "\n\nERROR: failed to load list item " + this.itemComponent);
+          location.hash = ""; // clear current hash 
+          location.reload(); // go to start app by reloading without hash
         });
+        
 
       } else {
         // with inline template binding can happen immediately

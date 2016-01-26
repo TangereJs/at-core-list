@@ -1,0 +1,8 @@
+{
+  "name": "at-core-list",
+  "version": "0.0.1.4",
+  "private": true,
+  "dependencies": {
+    "polymer": "Polymer/polymer#master"
+  }
+}
