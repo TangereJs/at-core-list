@@ -59,7 +59,9 @@
             divider = null;
           }
           var age = new Date();
-          age.setDate(age.getDate() - i);
+          age.setMinutes(age.getMinutes() - i + 10);
+          
+          //  <img class="ui avatar image" src="images/{{ index | modulo:4 }}.png">
           
           data.push({
             index: i,
