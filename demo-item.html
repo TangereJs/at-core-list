@@ -1,62 +1,95 @@
-<link rel="import" href="../polymer/polymer.html">
-<link rel="import" href="../liquid-template/liquid-template.html">
-<link rel="import" href="../at-core-data-sample/at-core-data-sample.html">
+<link rel="import" href="../at-core-view/at-core-view.html">
+<link rel="import" href="../at-now/now-card-behavior.html">
+<link rel="import" href="../at-carbon-clamp/at-carbon-clamp.html">
+<link rel="import" href="../at-carbon-moment/at-carbon-moment.html">
+<link rel="import" href="../at-content-preview/at-content-preview.html">
 
-
-<polymer-element name="demo-item" attributes="item">
+<dom-module id="demo-item">
 
   <template>
+
     <style>
-       liquid-template::shadow .item {
-        box-sizing: border-box;
-        height: 80px;
-        padding: 4px;
-        cursor: default;
-        overflow: hidden;
+      :host {
+        display: block;
+        box-sizing: border-box;      
+        height: 120px;
       }
-      liquid-template::shadow .message {
-        padding-left: 77px;
-        line-height: 167%;
-        background-repeat: no-repeat;
-        background-position: 10px 10px;
-        background-size: 60px;
+
+      .card {
+        cursor: pointer;
       }
-      liquid-template::shadow .from {
-        display: inline;
-        font-weight: bold;
+
+      .container {
+        padding: 16px;
       }
-      liquid-template::shadow .timestamp {
-        margin-left: 10px;
-        font-size: 12px;
-        opacity: 0.8;
+
+      .containerx:active {
+        background-color: var(--at-active-background-color);
+        transition: all 0.1s ease;
       }
-      liquid-template::shadow .body {
-        font-size: 12px;
+
+      .active {
+        background-color: var(--at-active-background-color);       
+        display: block;
       }
+
+
+      .item {
+        @apply(--layout-horizontal);
+        color: var(--primary-text-color);       
+        height: 72px;
+      }
+
+      .title {
+        opacity: var(--at-secondary-opacity);
+        color: var(--primary-text-color);
+        @apply(--paper-font-caption);
+        @apply(--layout-flex);
+      }
+
+      .ago {
+        opacity: var(--at-secondary-opacity);
+        @apply(--paper-font-caption);
+      }
+
+      .avatar {
+        @apply(--layout-self-center);
+        margin-left: 8px;
+      }
+
+      .content {
+        @apply(--layout-flex);
+        @apply(--layout-center-center);
+        min-width: 0;
+      }
+
     </style>
-    <liquid-template data="{{ item }}">
-      <template>
-        <div class="item">
-          <div class="message" style="background-image: url(images/{{ index | modulo:4 }}.png);">
-            <span class="from">{{name}}</span>
-            <span class="timestamp">{{time}}</span>
-            <div class="subject">List item #{{index}}</div>
-            <div class="body">{{details}}</div>
+
+    <at-core-view model="{{item}}" id="liquid_template" class="unselectable">
+      <template preserve-content>
+        <a href="{{link}}" on-click="ignoreEvent" on-tap="handleLink">
+          <div class="container">
+            <div class="item">
+              <div class="content">
+                <at-carbon-clamp lines="2">{{title}}</at-carbon-clamp>
+                <div class="title">{{description}}</div>
+                <at-carbon-moment class="title" datetime="{{date}}" utc from-now auto-refresh-rate="10"></at-carbon-moment>
+              </div>
+              <!--<at-content-preview class="avatar" preview="{{preview}}"></at-content-preview>-->
+            </div>
           </div>
-        </div>
+        </a>
       </template>
-    </liquid-template>
-    <at-core-data-sample data="{{ item }}" id="at_core_data_sample">{ "title": "value" }
-    </at-core-data-sample>
-
-
+    </at-core-view>
   </template>
+</dom-module>
 
-  <script>
-    Polymer('demo-item', {
-
-    });
-  </script>
-
-</polymer-element>
-
+<script>
+  Polymer({
+    is: 'demo-item',
+    behaviors: [Tangere.behavior.handleLink],
+    properties: {
+      item: Object
+    }
+  });
+</script>
