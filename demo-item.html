@@ -2,7 +2,6 @@
 <link rel="import" href="../at-now/now-card-behavior.html">
 <link rel="import" href="../at-carbon-clamp/at-carbon-clamp.html">
 <link rel="import" href="../at-carbon-moment/at-carbon-moment.html">
-<link rel="import" href="../at-content-preview/at-content-preview.html">
 
 <dom-module id="demo-item">
 
@@ -33,7 +32,6 @@
         display: block;
       }
 
-
       .item {
         @apply(--layout-horizontal);
         color: var(--primary-text-color);       
@@ -45,16 +43,6 @@
         color: var(--primary-text-color);
         @apply(--paper-font-caption);
         @apply(--layout-flex);
-      }
-
-      .ago {
-        opacity: var(--at-secondary-opacity);
-        @apply(--paper-font-caption);
-      }
-
-      .avatar {
-        @apply(--layout-self-center);
-        margin-left: 8px;
       }
 
       .content {
@@ -74,8 +62,7 @@
                 <at-carbon-clamp lines="2">{{title}}</at-carbon-clamp>
                 <div class="title">{{description}}</div>
                 <at-carbon-moment class="title" datetime="{{date}}" utc from-now auto-refresh-rate="10"></at-carbon-moment>
-              </div>
-              <!--<at-content-preview class="avatar" preview="{{preview}}"></at-content-preview>-->
+              </div>              
             </div>
           </div>
         </a>

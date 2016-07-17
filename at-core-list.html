@@ -3,103 +3,120 @@ Copyright (c) 2014 adenin TECHNOLOGIES. All rights reserved.
 This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
 -->
 
-<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../tangere/tangere.html">
 <link rel="import" href="../at-core-spinner/at-core-spinner.html">
 <link rel="import" href="../at-carbon-message/at-carbon-message.html">
+<link rel="import" href="../at-theme/at-theme.html">
 
 <dom-module id="at-core-list">
-
-  <style>
-    :host {
-      width: 100%;
-      display: block;      
-    }
-    #listWrapper {
-      width: 100%;
-      overflow: auto;
-    }
-    .listContainer .card.cols-1 .listItem:first-of-type {
-      margin-top: 10px;
-      border-top: 1px solid rgba(0, 0, 0, 0.16);
-    }
-    .card.cols-1 {
-      overflow-x:hidden;
-    }
-    .card.cols-1 .listItem {
-      padding-left: 0px;
-      padding-right: 0px;
-    }
-    .grid .listContainer {
-      border-top: 1px solid rgba(0, 0, 0, 0.16);
-    }
-    .listContainer {
-      overflow-x: hidden;
-      padding-bottom: 2px;
-    }
-    .listItem {
-      background: #FFF;
-      padding: 0px;
-      overflow: visible;
-      float: left;
-      height: auto;      
-      transition: width .3s ease-in-out;
-    }
-    .card .listItem {
-      margin: 10px;
-      border-radius: 2px;
-      box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.16);
-    }
-    .grid .listItem {
-      margin: 0px;
-      padding: 10px;
-      border-left: 1px solid transparent;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.16);
-      border-right: 1px solid rgba(0, 0, 0, 0.16);
-    }
-    /*.card .listItem >:first-child {
+  <template>
+    <style include="card-common"></style>
+    <style>
+      :host {
+        width: 100%;
+        display: block;
+      }
+      
+      #listWrapper {
+        width: 100%;
+        overflow: auto;
+      }
+      
+      .listContainer .card.cols-1 .listItem:first-of-type {
+        margin-top: 10px;
+        border-top: 1px solid rgba(0, 0, 0, 0.16);
+      }
+      
+      .card.cols-1 {
+        overflow-x: hidden;
+      }
+      
+      .card.cols-1 .listItem {
+        padding-left: 0px;
+        padding-right: 0px;
+      }
+      
+      .grid .listContainer {
+        border-top: 1px solid rgba(0, 0, 0, 0.16);
+      }
+      
+      .listContainer {
+        overflow-x: hidden;
+        padding-bottom: 2px;
+      }
+      
+      .listItem {
+        background: #FFF;
+        padding: 0px;
+        overflow: visible;
+        float: left;
+        height: auto;
+        transition: width .3s ease-in-out;
+      }
+      
+      .card .listItem {
+        margin: 10px;
+        border-radius: 2px;
+        box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.16);
+      }
+      
+      .grid .listItem {
+        margin: 0px;
+        padding: 10px;
+        border-left: 1px solid transparent;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.16);
+        border-right: 1px solid rgba(0, 0, 0, 0.16);
+      }
+      /*.card .listItem >:first-child {
       box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
       box-sizing: border-box;
       height: 100%;
     }*/
-    .cols-1 .listItem {
-      width: 100% !important;
-      padding-top: 0px;
-      padding-bottom: 0px;
-      margin: 0px;
-      border-width: 0px;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.16);
-      -moz-box-sizing: border-box;
-      -webkit-box-sizing: border-box;
-      box-sizing: border-box;
-      height: auto !important;
-      box-shadow: none;
-    }
-    .cols-1 .listItem >:first-child {
-      box-shadow: none;
-    }
-    .cols-2 .listItem {
-      width: calc(50% - 10px - 10px - 1px - 1px) !important;
-    }
-    .cols-3 .listItem {
-      width: calc(33.3333% - 10px - 10px - 1px - 1px) !important;
-    }
-    .cols-4 .listItem {
-      width: calc(25% - 10px - 10px - 1px - 1px) !important;
-    }
-    .cols-5 .listItem {
-      width: calc(20% - 10px - 10px - 1px - 1px) !important;
-    }
-  </style>
-  <template>
-    <at-core-spinner id="spinner" type="wave"></at-core-spinner>   
+      
+      .cols-1 .listItem {
+        width: 100% !important;
+        padding-top: 0px;
+        padding-bottom: 0px;
+        margin: 0px;
+        border-width: 0px;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.16);
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        height: auto !important;
+        box-shadow: none;
+      }
+      
+      .cols-1 .listItem >:first-child {
+        box-shadow: none;
+      }
+      
+      .cols-2 .listItem {
+        width: calc(50% - 10px - 10px - 1px - 1px) !important;
+      }
+      
+      .cols-3 .listItem {
+        width: calc(33.3333% - 10px - 10px - 1px - 1px) !important;
+      }
+      
+      .cols-4 .listItem {
+        width: calc(25% - 10px - 10px - 1px - 1px) !important;
+      }
+      
+      .cols-5 .listItem {
+        width: calc(20% - 10px - 10px - 1px - 1px) !important;
+      }
+      
+    </style>
+
+    <at-core-spinner id="spinner" type="wave"></at-core-spinner>
     <at-carbon-message type="info" id="msgEmptyList"></at-carbon-message>
   </template>
 </dom-module>
 
 <script>
   Polymer({
-    is: 'at-core-list',
-    _scopeCssViaAttr: true,
+    is: 'at-core-list',    
     properties: {
       items: {
         type: Array
@@ -119,11 +136,20 @@ This code may only be used under the BSD style license found at http://polymer.g
         value: "card",
         notify: true
       },
+      view: {
+        type: String,
+        value: "",
+        notify: true
+      },
       indicator: {
         type: Boolean,
         value: false,
         reflectToAttribute: true,
         observer: "changeIndicator"
+      },
+      height: {
+        type: String,
+        value: "120px"
       },
       emptyList: {
         type: String,
@@ -137,19 +163,19 @@ This code may only be used under the BSD style license found at http://polymer.g
     },
 
     observers: [
-      'initialize(items.*,itemComponent, layout, cardWidth, emptyList)'      
+      'initialize(items.*,itemComponent, layout, cardWidth, emptyList, view, height)'
     ],
 
-    changeIndicator: function () {      
+    changeIndicator: function () {
       this.$.spinner.display = this.indicator ? "block" : "none";
       if (this.indicator) {
-        this.clear();        
+        this.clear();
       }
     },
 
     clear: function () {
 
-      this.$.msgEmptyList.html = "";  // clear error message
+      this.$.msgEmptyList.html = ""; // clear error message
 
       // remove all items
       var listWrapper = Polymer.dom(this.root).querySelector("#listWrapper");
@@ -172,7 +198,7 @@ This code may only be used under the BSD style license found at http://polymer.g
       var cw = wrapper.offsetWidth;
 
       // retry if offsetWidth == 0 to give time to paint 
-      if (cw == 0) {        
+      if (cw == 0) {
         this.async(function () {
           this.layoutList();
         }, 100);
@@ -183,32 +209,36 @@ This code may only be used under the BSD style license found at http://polymer.g
       var cols = Math.floor(cw / this.cardWidth);
       if (cols < 1) cols = 1;
       if (cols > 5) cols = 5;
-      
+
       //console.log("cols " + cols + " cw " + cw + " " + this.cardWidth);
-      
+
       var newClass = layout + " cols-" + cols;
+      
+      newClass = this._scopeElementClass(wrapper, newClass);  // add scope for element styles
+      
       if (wrapper.className != newClass) {
         wrapper.className = newClass;
       }
-
+      
+      Polymer.dom(wrapper).setAttribute("class",newClass);
       return cw;
     },
 
     initialize: function () {
-      
+
       var mel = this.$.msgEmptyList;
       mel.html = "";
-      
+
       // show error if items is an empty array
       if (this.items.constructor == Array && this.items.length == 0) {
         mel.html = this.emptyList;
       }
 
-      if (!this.items || (!this.template && !this.itemComponent)) {
+      if (!this.items || (!this.view && !this.itemComponent)) {
         return;
       }
 
-      if (!!this.itemComponent) {
+      if (!!this.itemComponent || !!this.view) {
 
         // dynamically load item-component
 
@@ -218,18 +248,18 @@ This code may only be used under the BSD style license found at http://polymer.g
 
         if (window.ComponentsBase != undefined) compUrl = window.ComponentsBase;
 
-        var compName = this.itemComponent;
+        var compName = this.itemComponent ? this.itemComponent : "at-core-view/at-core-view";
         var importPath = compName.indexOf("/") >= 0 ? compUrl + compName + ".html" : compName + ".html";
 
         this.importHref(importPath, function () {
           this.bindItems();
         }, function () {
-          Polymer.signal("busy-end");          
+          Polymer.signal("busy-end");
           alert(window.location.href + "\n\nERROR: failed to load list item " + this.itemComponent);
           location.hash = ""; // clear current hash 
           location.reload(); // go to start app by reloading without hash
         });
-        
+
 
       } else {
         // with inline template binding can happen immediately
@@ -239,7 +269,7 @@ This code may only be used under the BSD style license found at http://polymer.g
 
     bindItems: function () {
 
-      if (!this.items || (!this.template && !this.itemComponent)) {
+      if (!this.items || (!this.view && !this.itemComponent)) {
         return;
       }
 
@@ -286,7 +316,7 @@ This code may only be used under the BSD style license found at http://polymer.g
       // create wrapper div
       var listItem = document.createElement("div");
       listItem.className = "listItem";
-
+      if(this.height) listItem.style.height = this.height;
 
       // apply template for each item in items
       //  ... wrap result with card layout div
@@ -295,16 +325,21 @@ This code may only be used under the BSD style license found at http://polymer.g
       var item = null;
 
       // create component element
-      var comp = this.itemComponent;
+      var comp = this.itemComponent ? this.itemComponent : "at-core-view";
       if (comp.indexOf("/") > 0) {
         comp = comp.substring(1 + comp.indexOf("/"));
       }
-      
+
       for (var i = 0; i < this.items.length; i++) {
 
         var item = document.createElement(comp);
-        item.item = this.items[i];
-
+        if(this.view) {
+          item.view = this.view;
+          item.value = this.items[i];
+        } else {
+          item.item = this.items[i];
+        }
+        
         var div = listItem.cloneNode(true);
         div.appendChild(item);
 
@@ -314,7 +349,7 @@ This code may only be used under the BSD style license found at http://polymer.g
       }
 
       // transform ShadyDom styles of innerHTML
-      if (!Polymer.Settings.useShadow) Polymer.StyleTransformer.dom(listWrapper, this.is, true);
+     //**  if (!Polymer.Settings.useShadow) Polymer.StyleTransformer.dom(listWrapper, this.is, true);
 
       this.indicator = false; // hide indicator before list is rendered
 
@@ -328,7 +363,7 @@ This code may only be used under the BSD style license found at http://polymer.g
 
       // update layout after windows resize
       window.addEventListener('resize', function () {
-        
+
         this.layoutList();
 
         // 2nd layout after side drawer animation is finished
@@ -352,7 +387,7 @@ This code may only be used under the BSD style license found at http://polymer.g
 
       // show/hide drawer changes also the available width
       window.addEventListener('core-responsive-change', function () {
-        
+
         this.async(function () {
           this.layoutList();
         });
