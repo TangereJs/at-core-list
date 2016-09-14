@@ -12,101 +12,100 @@ This code may only be used under the BSD style license found at http://polymer.g
   <template>
     <style include="card-common"></style>
     <style>
-      :host {
-        width: 100%;
-        display: block;
-      }
-      
-      #listWrapper {
-        width: 100%;
-        overflow: auto;
-      }
-      
-      .listContainer .card.cols-1 .listItem:first-of-type {
-        margin-top: 10px;
-        border-top: 1px solid rgba(0, 0, 0, 0.16);
-      }
-      
-      .card.cols-1 {
-        overflow-x: hidden;
-      }
-      
-      .card.cols-1 .listItem {
-        padding-left: 0px;
-        padding-right: 0px;
-      }
-      
-      .grid .listContainer {
-        border-top: 1px solid rgba(0, 0, 0, 0.16);
-      }
-      
-      .listContainer {
-        overflow-x: hidden;
-        padding-bottom: 2px;
-      }
-      
-      .listItem {
-        background: #FFF;
-        padding: 0px;
-        overflow: visible;
-        float: left;
-        height: auto;
-        transition: width .3s ease-in-out;
-      }
-      
-      .card .listItem {
-        margin: 10px;
-        border-radius: 2px;
-        box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.16);
-      }
-      
-      .grid .listItem {
-        margin: 0px;
-        padding: 10px;
-        border-left: 1px solid transparent;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.16);
-        border-right: 1px solid rgba(0, 0, 0, 0.16);
-      }
-      /*.card .listItem >:first-child {
-      box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
-      box-sizing: border-box;
-      height: 100%;
-    }*/
-      
-      .cols-1 .listItem {
-        width: 100% !important;
-        padding-top: 0px;
-        padding-bottom: 0px;
-        margin: 0px;
-        border-width: 0px;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.16);
-        -moz-box-sizing: border-box;
-        -webkit-box-sizing: border-box;
+        :host {
+          width: 100%;
+          display: block;
+        }
+
+        #listWrapper {
+          width: 100%;
+          overflow: auto;
+        }
+
+        .listContainer .card.cols-1 .listItem:first-of-type {
+          margin-top: 10px;
+          border-top: 1px solid rgba(0, 0, 0, 0.16);
+        }
+
+        .card.cols-1 {
+          overflow-x: hidden;
+        }
+
+          .card.cols-1 .listItem {
+            padding-left: 0px;
+            padding-right: 0px;
+          }
+
+        .grid .listContainer {
+          border-top: 1px solid rgba(0, 0, 0, 0.16);
+        }
+
+        .listContainer {
+          overflow-x: hidden;
+          padding-bottom: 2px;
+        }
+
+        .listItem {
+          background: #FFF;
+          padding: 0px;
+          overflow: visible;
+          float: left;
+          height: auto;
+          transition: width .3s ease-in-out;
+        }
+
+        .card .listItem {
+          margin: 10px;
+          border-radius: 2px;
+          box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.16);
+        }
+
+        .grid .listItem {
+          margin: 0px;
+          padding: 10px;
+          border-left: 1px solid transparent;
+          border-bottom: 1px solid rgba(0, 0, 0, 0.16);
+          border-right: 1px solid rgba(0, 0, 0, 0.16);
+        }
+        /*.card .listItem >:first-child {
+        box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
         box-sizing: border-box;
-        height: auto !important;
-        box-shadow: none;
-      }
-      
-      .cols-1 .listItem >:first-child {
-        box-shadow: none;
-      }
-      
-      .cols-2 .listItem {
-        width: calc(50% - 10px - 10px - 1px - 1px) !important;
-      }
-      
-      .cols-3 .listItem {
-        width: calc(33.3333% - 10px - 10px - 1px - 1px) !important;
-      }
-      
-      .cols-4 .listItem {
-        width: calc(25% - 10px - 10px - 1px - 1px) !important;
-      }
-      
-      .cols-5 .listItem {
-        width: calc(20% - 10px - 10px - 1px - 1px) !important;
-      }
-      
+        height: 100%;
+      }*/
+
+        .cols-1 .listItem {
+          width: 100% !important;
+          padding-top: 0px;
+          padding-bottom: 0px;
+          margin: 0px;
+          border-width: 0px;
+          border-bottom: 1px solid rgba(0, 0, 0, 0.16);
+          -moz-box-sizing: border-box;
+          -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+          height: auto !important;
+          box-shadow: none;
+        }
+
+          .cols-1 .listItem > :first-child {
+            box-shadow: none;
+          }
+
+        .cols-2 .listItem {
+          width: calc(50% - 10px - 10px - 1px - 1px) !important;
+        }
+
+        .cols-3 .listItem {
+          width: calc(33.3333% - 10px - 10px - 1px - 1px) !important;
+        }
+
+        .cols-4 .listItem {
+          width: calc(25% - 10px - 10px - 1px - 1px) !important;
+        }
+
+        .cols-5 .listItem {
+          width: calc(20% - 10px - 10px - 1px - 1px) !important;
+        }
     </style>
 
     <at-core-spinner id="spinner" type="wave"></at-core-spinner>
@@ -116,7 +115,7 @@ This code may only be used under the BSD style license found at http://polymer.g
 
 <script>
   Polymer({
-    is: 'at-core-list',    
+    is: 'at-core-list',
     properties: {
       items: {
         type: Array
@@ -168,6 +167,19 @@ This code may only be used under the BSD style license found at http://polymer.g
       'initialize(items.*,itemComponent, layout, cardWidth, emptyList, view, height)'
     ],
 
+    $meta: [{
+      title: "Liquid List",
+      type: "element",
+      xtype: "at-core-list",
+      invisible: true
+    }],
+
+    actionListener: function (event) {
+
+      if (!!event.detail.parameter.items) this.items = event.detail.parameter.items;
+
+    },
+
     changeIndicator: function () {
       this.$.spinner.display = this.indicator ? "block" : "none";
       if (this.indicator) {
@@ -199,7 +211,7 @@ This code may only be used under the BSD style license found at http://polymer.g
 
       var cw = wrapper.offsetWidth;
 
-      // retry if offsetWidth == 0 to give time to paint 
+      // retry if offsetWidth == 0 to give time to paint
       if (cw == 0) {
         this.async(function () {
           this.layoutList();
@@ -215,19 +227,19 @@ This code may only be used under the BSD style license found at http://polymer.g
       //console.log("cols " + cols + " cw " + cw + " " + this.cardWidth);
 
       var newClass = layout + " cols-" + cols;
-      
+
       newClass = this._scopeElementClass(wrapper, newClass);  // add scope for element styles
-      
+
       if (wrapper.className != newClass) {
         wrapper.className = newClass;
       }
-      
-      Polymer.dom(wrapper).setAttribute("class",newClass);
+
+      Polymer.dom(wrapper).setAttribute("class", newClass);
       return cw;
     },
 
     initialize: function () {
-
+   
       var mel = this.$.msgEmptyList;
       mel.html = "";
 
@@ -245,7 +257,7 @@ This code may only be used under the BSD style license found at http://polymer.g
         // dynamically load item-component
 
         // load item-component from other component (itemComponent = component-name/item-component) or from localfolder (item-component)
-        var compUrl = document.baseURI.toLowerCase().indexOf("/components/") >= 0 ? "../" : "components/";
+        var compUrl = document.baseURI.toLowerCase().indexOf("/components/") >= 0 ? "../" : "/components/";
         if (document.URL.indexOf("/elements/designer-element/") >= 0) compUrl = "/components/"; // standalone designer preview?
 
         if (window.ComponentsBase != undefined) compUrl = window.ComponentsBase;
@@ -258,7 +270,7 @@ This code may only be used under the BSD style license found at http://polymer.g
         }, function () {
           Polymer.signal("busy-end");
           alert(window.location.href + "\n\nERROR: failed to load list item " + this.itemComponent);
-          location.hash = ""; // clear current hash 
+          location.hash = ""; // clear current hash
           location.reload(); // go to start app by reloading without hash
         });
 
@@ -318,7 +330,7 @@ This code may only be used under the BSD style license found at http://polymer.g
       // create wrapper div
       var listItem = document.createElement("div");
       listItem.className = "listItem";
-      if(this.height && this.view) listItem.style.height = this.height;
+      if (this.height && this.view) listItem.style.height = this.height;
 
       // apply template for each item in items
       //  ... wrap result with card layout div
@@ -335,13 +347,13 @@ This code may only be used under the BSD style license found at http://polymer.g
       for (var i = 0; i < this.items.length; i++) {
 
         var item = document.createElement(comp);
-        if(this.view) {
+        if (this.view) {
           item.view = this.view;
           item.value = this.items[i];
         } else {
           item.item = this.items[i];
         }
-        
+
         var div = listItem.cloneNode(true);
         div.appendChild(item);
 
@@ -351,7 +363,7 @@ This code may only be used under the BSD style license found at http://polymer.g
       }
 
       // transform ShadyDom styles of innerHTML
-     //**  if (!Polymer.Settings.useShadow) Polymer.StyleTransformer.dom(listWrapper, this.is, true);
+      //**  if (!Polymer.Settings.useShadow) Polymer.StyleTransformer.dom(listWrapper, this.is, true);
 
       this.indicator = false; // hide indicator before list is rendered
 
