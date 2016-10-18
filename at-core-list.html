@@ -7,9 +7,11 @@ This code may only be used under the BSD style license found at http://polymer.g
 <link rel="import" href="../at-core-spinner/at-core-spinner.html">
 <link rel="import" href="../at-carbon-message/at-carbon-message.html">
 <link rel="import" href="../at-theme/at-theme.html">
+<link rel="import" href="../at-core-style-classes/at-core-style-classes.html">
 
 <dom-module id="at-core-list">
   <template>
+    <style include="at-core-style-classes"></style>
     <style include="card-common"></style>
     <style>
         :host {
@@ -83,7 +85,7 @@ This code may only be used under the BSD style license found at http://polymer.g
           -moz-box-sizing: border-box;
           -webkit-box-sizing: border-box;
           box-sizing: border-box;
-          height: auto !important;
+          xxxheight: auto !important;
           box-shadow: none;
         }
 
@@ -126,14 +128,21 @@ This code may only be used under the BSD style license found at http://polymer.g
         notify: true
       },
       cardWidth: {
-        type: Number,
-        value: 320,
+        type: String,
+        value: "320",
+        notify: true
+      },
+      cardHeight: {
+        type: String,
+        value: "",
         notify: true
       },
       layout: {
         type: String,
         value: "card",
-        notify: true
+        notify: true,
+        xtype: "enum",
+        available: "card,list"
       },
       view: {
         type: String,
@@ -164,7 +173,7 @@ This code may only be used under the BSD style license found at http://polymer.g
     },
 
     observers: [
-      'initialize(items.*,itemComponent, layout, cardWidth, emptyList, view, height)'
+      'initialize(items.*,itemComponent, layout, cardWidth, emptyList, view, cardHeight)'
     ],
 
     $meta: [{
@@ -330,7 +339,7 @@ This code may only be used under the BSD style license found at http://polymer.g
       // create wrapper div
       var listItem = document.createElement("div");
       listItem.className = "listItem";
-      if (this.height && this.view) listItem.style.height = this.height;
+      if (this.cardHeight && this.view) listItem.style.height = this.cardHeight;
 
       // apply template for each item in items
       //  ... wrap result with card layout div
