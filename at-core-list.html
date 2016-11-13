@@ -261,9 +261,25 @@ This code may only be used under the BSD style license found at http://polymer.g
         return;
       }
 
+      // dynamically load item-component
       if (!!this.itemComponent || !!this.view) {
+        
+        // expand relative name with name prefix
+        var elName = this.itemComponent;
+        if (elName.indexOf(".card") > 0) {        
+          var elNameOrg = elName;
+          var resolve = { namePrefix: "" };
 
-        // dynamically load item-component
+          this.fire("resolve-name-prefix", resolve);
+          var prefix = resolve.namePrefix;
+
+          if (elName == "default.view") elName = "";
+          elName = elName.replace("default.", "");
+
+          elName = prefix + "/" + prefix + (elName ? ("-" + elName.replace(".", "-")) : "");
+
+          this.itemComponent = elName;
+        }
 
         // load item-component from other component (itemComponent = component-name/item-component) or from localfolder (item-component)
         var compUrl = document.baseURI.toLowerCase().indexOf("/components/") >= 0 ? "../" : "/components/";
@@ -278,9 +294,12 @@ This code may only be used under the BSD style license found at http://polymer.g
           this.bindItems();
         }, function () {
           Polymer.signal("busy-end");
-          alert(window.location.href + "\n\nERROR: failed to load list item " + this.itemComponent);
-          location.hash = ""; // clear current hash
-          location.reload(); // go to start app by reloading without hash
+          var restart = confirm(window.location.href + "\n\nERROR: failed to load list item " + this.itemComponent);
+
+          if (restart) {
+            location.hash = ""; // clear current hash
+            location.reload(); // go to start app by reloading without hash
+          }
         });
 
 
