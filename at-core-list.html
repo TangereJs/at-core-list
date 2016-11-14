@@ -375,15 +375,17 @@ This code may only be used under the BSD style license found at http://polymer.g
       for (var i = 0; i < this.items.length; i++) {
 
         var item = document.createElement(comp);
+        var value = this.items[i];
+        value._session = Tangere.session;
 
         if (this.view) {
           item.view = this.view;
-          item.value = this.items[i];
+          item.value = value;
         } else {
           if (typeof item.model == "object") {
-            item.model = this.items[i];
+            item.model = value;
           } else {
-            item.item = this.items[i];
+            item.item = value;
           }
         }
 
