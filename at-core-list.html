@@ -112,6 +112,7 @@ This code may only be used under the BSD style license found at http://polymer.g
 
     <at-core-spinner id="spinner" type="wave"></at-core-spinner>
     <at-carbon-message type="info" id="msgEmptyList"></at-carbon-message>
+    <div id="listWrapper"></div>
   </template>
 </dom-module>
 
@@ -164,11 +165,6 @@ This code may only be used under the BSD style license found at http://polymer.g
       emptyList: {
         type: String,
         value: "No data found"
-      },
-      _initialize: {
-        type: String,
-        value: "",
-        notify: true
       }
     },
 
@@ -189,26 +185,27 @@ This code may only be used under the BSD style license found at http://polymer.g
 
     },
 
-    changeIndicator: function () {
-      this.$.spinner.display = this.indicator ? "block" : "none";
+    changeIndicator: function () {          
       if (this.indicator) {
         this.clear();
       }
+      this.$.spinner.display = this.indicator ? "block" : "none";
     },
 
     clear: function () {
 
+      this.items = undefined;
       this.$.msgEmptyList.html = ""; // clear error message
 
       // remove all items
-      var listWrapper = Polymer.dom(this.root).querySelector("#listWrapper");
+      var listWrapper = this.$.listWrapper;
       if (listWrapper) {
-        while (listWrapper.hasChildNodes()) {
-          listWrapper.removeChild(listWrapper.lastChild);
-        }
+        Polymer.dom(listWrapper).innerHTML = "";
+        Polymer.dom.flush();
       }
-      Polymer.dom.flush();
+      
     },
+
     layoutList: function () {
 
       var layout = this.layout == "grid" ? "grid" : "card";
@@ -248,7 +245,7 @@ This code may only be used under the BSD style license found at http://polymer.g
     },
 
     initialize: function () {
-   
+
       var mel = this.$.msgEmptyList;
       mel.html = "";
 
@@ -257,7 +254,12 @@ This code may only be used under the BSD style license found at http://polymer.g
         mel.html = this.emptyList;
       }
 
-      if (!this.items || (!this.view && !this.itemComponent)) {
+      if (!this.items) {
+        return;
+      }
+
+      if (!this.view && !this.itemComponent) {
+        alert("either .view or .itemComponent need to be non-empty");       
         return;
       }
 
@@ -288,6 +290,7 @@ This code may only be used under the BSD style license found at http://polymer.g
         if (window.ComponentsBase != undefined) compUrl = window.ComponentsBase;
 
         var compName = this.itemComponent ? this.itemComponent : "at-core-view/at-core-view";
+ 
         var importPath = compName.indexOf("/") >= 0 ? compUrl + compName + ".html" : compName + ".html";
 
         this.importHref(importPath, function () {
@@ -311,27 +314,12 @@ This code may only be used under the BSD style license found at http://polymer.g
 
     bindItems: function () {
 
-      if (!this.items || (!this.view && !this.itemComponent)) {
+      if (!this.items || !this.items.length || (!this.view && !this.itemComponent)) {
         return;
       }
 
-      // listWrapper is used to get the available width
-      //var listWrapper = this.shadowRoot.getElementById("listWrapper");
-      var listWrapper = Polymer.dom(this.root).querySelector("#listWrapper");
-
-      if (!listWrapper) {
-        // create new listWrapper
-        listWrapper = document.createElement("div");
-        listWrapper.id = "listWrapper";
-        //this.shadowRoot.appendChild(listWrapper);
-        Polymer.dom(this.root).appendChild(listWrapper);
-      } else {
-        // empty existing wrapper
-        while (listWrapper.hasChildNodes()) {
-          listWrapper.removeChild(listWrapper.lastChild);
-        }
-      }
-
+      var listWrapper = this.$.listWrapper;
+      Polymer.dom(listWrapper).innerHTML = "";
       Polymer.dom.flush();
 
       // calculate layout columns
@@ -390,7 +378,7 @@ This code may only be used under the BSD style license found at http://polymer.g
         }
 
         var div = listItem.cloneNode(true);
-        div.appendChild(item);
+        Polymer.dom(div).appendChild(item);
 
         //listContainer.appendChild(div);
         Polymer.dom(listContainer).appendChild(div);
@@ -405,7 +393,10 @@ This code may only be used under the BSD style license found at http://polymer.g
       //append list container to shadow dom
       Polymer.dom(listWrapper).appendChild(listContainer);
 
-      this.fire("list-ready");
+      Polymer.dom.flush();
+      this.async(function () {        
+        this.fire("list-ready");
+      }, 1);
     },
 
     ready: function () {
