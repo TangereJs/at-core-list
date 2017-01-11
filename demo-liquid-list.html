@@ -1,3 +1,4 @@
+<link rel="import" href="../tangere/tangere.html">
 <link rel="import" href="at-core-list.html">
 
 <dom-module id="demo-liquid-list">
@@ -6,7 +7,7 @@
       :host {
         display: block;
       }
-      
+
       at-core-list {
         width: 100%;
       }
@@ -44,7 +45,7 @@
         this.data = this.generateData();
 
         this.$.list.view = (function () {
-          /*  
+          /*
               <a href="{{link}}" on-click="ignoreEvent" on-tap="handleLink">
                 <div class="container">
                   <div class="item">
@@ -52,13 +53,13 @@
                       <at-carbon-clamp lines="2">{{title}}</at-carbon-clamp>
                       <div class="title">{{description}}</div>
                       <at-carbon-moment class="title" datetime="{{date}}" utc from-now auto-refresh-rate="10"></at-carbon-moment>
-                    </div>              
+                    </div>
                   </div>
                 </div>
               </a>
           */
-        }).toString().match(/[^]*\/\*([^]*)\*/)[1]; // convert comment to multiline string  
-       
+        }).toString().match(/[^]*\/\*([^]*)\*/)[1]; // convert comment to multiline string
+
       },
       properties: {
         data: {

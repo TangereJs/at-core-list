@@ -1,3 +1,4 @@
+<link rel="import" href="../tangere/tangere.html">
 <link rel="import" href="../at-core-view/at-core-view.html">
 <link rel="import" href="../at-now/now-card-behavior.html">
 <link rel="import" href="../at-carbon-clamp/at-carbon-clamp.html">
@@ -10,7 +11,7 @@
     <style>
       :host {
         display: block;
-        box-sizing: border-box;      
+        box-sizing: border-box;
         height: 120px;
       }
 
@@ -28,13 +29,13 @@
       }
 
       .active {
-        background-color: var(--at-active-background-color);       
+        background-color: var(--at-active-background-color);
         display: block;
       }
 
       .item {
         @apply(--layout-horizontal);
-        color: var(--primary-text-color);       
+        color: var(--primary-text-color);
         height: 72px;
       }
 
@@ -62,7 +63,7 @@
                 <at-carbon-clamp lines="2">{{title}}</at-carbon-clamp>
                 <div class="title">{{description}}</div>
                 <at-carbon-moment class="title" datetime="{{date}}" utc from-now auto-refresh-rate="10"></at-carbon-moment>
-              </div>              
+              </div>
             </div>
           </div>
         </a>
