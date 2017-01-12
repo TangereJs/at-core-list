@@ -8,8 +8,7 @@
     "at-carbon-message": "TangereJs/at-carbon-message#master",
     "at-theme": "TangereJs/at-theme#master",
     "at-core-style-classes": "TangereJs/at-core-style-classes#master",
-    "at-core-view": "TangereJs/at-core-view#master",
-    "at-now": "TangereJs/at-now#master",
+    "at-core-view": "TangereJs/at-core-view#master",    
     "at-carbon-clamp": "TangereJs/at-carbon-clamp#master",
     "at-carbon-moment": "TangereJs/at-carbon-moment#master"
   }
