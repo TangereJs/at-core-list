@@ -185,7 +185,7 @@ This code may only be used under the BSD style license found at http://polymer.g
 
     },
 
-    changeIndicator: function () {          
+    changeIndicator: function () {
       if (this.indicator) {
         this.clear();
       }
@@ -203,7 +203,7 @@ This code may only be used under the BSD style license found at http://polymer.g
         Polymer.dom(listWrapper).innerHTML = "";
         Polymer.dom.flush();
       }
-      
+
     },
 
     layoutList: function () {
@@ -259,16 +259,16 @@ This code may only be used under the BSD style license found at http://polymer.g
       }
 
       if (!this.view && !this.itemComponent) {
-        alert("either .view or .itemComponent need to be non-empty");       
+        alert("either .view or .itemComponent need to be non-empty");
         return;
       }
 
       // dynamically load item-component
       if (!!this.itemComponent || !!this.view) {
-        
+
         // expand relative name with name prefix
         var elName = this.itemComponent;
-        if (elName.indexOf(".card") > 0) {        
+        if (elName.indexOf(".card") > 0) {
           var elNameOrg = elName;
           var resolve = { namePrefix: "" };
 
@@ -290,7 +290,7 @@ This code may only be used under the BSD style license found at http://polymer.g
         if (window.ComponentsBase != undefined) compUrl = window.ComponentsBase;
 
         var compName = this.itemComponent ? this.itemComponent : "at-core-view/at-core-view";
- 
+
         var importPath = compName.indexOf("/") >= 0 ? compUrl + compName + ".html" : compName + ".html";
 
         this.importHref(importPath, function () {
@@ -394,7 +394,7 @@ This code may only be used under the BSD style license found at http://polymer.g
       Polymer.dom(listWrapper).appendChild(listContainer);
 
       Polymer.dom.flush();
-      this.async(function () {        
+      this.async(function () {
         this.fire("list-ready");
       }, 1);
     },
