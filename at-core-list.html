@@ -181,7 +181,8 @@ This code may only be used under the BSD style license found at http://polymer.g
 
     actionListener: function (event) {
 
-      if (!!event.detail.parameter.items) this.items = event.detail.parameter.items;
+      if (event.detail.parameter && !!event.detail.parameter.items) this.items = event.detail.parameter.items;
+      if (event.detail.model && event.detail.model.state && event.detail.model.state.model && !!event.detail.model.state.model.items) this.items = event.detail.model.state.model.items;
 
     },
 
