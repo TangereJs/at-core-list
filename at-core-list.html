@@ -120,7 +120,10 @@ This code may only be used under the BSD style license found at http://polymer.g
     is: 'at-core-list',
     properties: {
       items: {
-        type: Array
+        type: Array,
+        value: function() {
+          return [];
+        }
       },
       itemComponent: {
         type: String,
@@ -195,7 +198,7 @@ This code may only be used under the BSD style license found at http://polymer.g
 
     clear: function () {
 
-      this.items = undefined;
+      this.items = [];
       this.$.msgEmptyList.html = ""; // clear error message
 
       // remove all items
@@ -235,7 +238,9 @@ This code may only be used under the BSD style license found at http://polymer.g
 
       var newClass = layout + " cols-" + cols;
 
-      newClass = this._scopeElementClass(wrapper, newClass);  // add scope for element styles
+      if (this._scopeElementClass != undefined) {
+        newClass = this._scopeElementClass(wrapper, newClass);  // add scope for element styles
+      }
 
       if (wrapper.className != newClass) {
         wrapper.className = newClass;
