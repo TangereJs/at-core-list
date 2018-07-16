@@ -265,7 +265,6 @@ This code may only be used under the BSD style license found at http://polymer.g
       }
 
       if (!this.view && !this.itemComponent) {
-        alert("either .view or .itemComponent need to be non-empty");
         return;
       }
 
@@ -320,7 +319,8 @@ This code may only be used under the BSD style license found at http://polymer.g
 
     bindItems: function () {
 
-      if (!this.items || !this.items.length || (!this.view && !this.itemComponent)) {
+      if (!this.items || !this.items.length || (!this.view && !this.itemComponent)) { 
+        console.log("For at-core-list, please provide a non-empty value for either .view or .itemComponent properties");
         return;
       }
 
