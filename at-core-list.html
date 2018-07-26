@@ -256,7 +256,7 @@ This code may only be used under the BSD style license found at http://polymer.g
       mel.html = "";
 
       // show error if items is an empty array
-      if (this.items.constructor == Array && this.items.length == 0) {
+      if (!this.indicator && this.items.constructor == Array && this.items.length == 0) {
         mel.html = this.emptyList;
       }
 
