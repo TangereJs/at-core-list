@@ -243,7 +243,7 @@ This code may only be used under the BSD style license found at http://polymer.g
       }
 
       if (wrapper.className != newClass) {
-        wrapper.className = newClass;
+        this._setClassList(wrapper, newClass);
       }
 
       Polymer.dom(wrapper).setAttribute("class", newClass);
@@ -351,7 +351,7 @@ This code may only be used under the BSD style license found at http://polymer.g
 
       // create wrapper div
       var listItem = document.createElement("div");
-      listItem.className = "listItem";
+      this._setClassList(listItem, "listItem");
       if (this.cardHeight && this.view) listItem.style.height = this.cardHeight;
 
       // apply template for each item in items
